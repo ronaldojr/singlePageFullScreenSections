@@ -1,33 +1,59 @@
 $("nav").find('a').click(function(e){
-	e.preventDefault();
+	e.stopImmediatePropagation();
+  e.stopPropagation();
+  e.preventDefault();
 	var section = $(this).attr('href');
+  $('section.active').toggleClass('active');
+  $(section).toggleClass("active");
 	$('html, body').animate({
-		scrollTop: $(section).offset().top
+		scrollTop: $(section).stop().offset().top
 	});
 });
 
 
-$("section").keyup(function(e){
-	if (e.which == 37 || e.which == 38) {
-		console.log("sobe");
-		if (!$(this).is(':first-child')){
-        	$('html, body').stop().animate({scrollTop:$(this).next().offset().top});
-      	}
-	} else if (e.which == 39 || e.which == 40) {
-		console.log("desce");
-		if (!$(this).is(':last-child')) {
-        	$('html, body').stop().animate({scrollTop: $(this).next().offset().top});
-    	}	
-	}
+$(document).keydown(function(e){
+
+  console.log(e.keyCode)
+
+  var $ativa = $('section.active');
+  var $proximo = $($ativa).next();
+  var $anterior = $($ativa).prev();
+
+  if (e.which == 39 || e.which == 40) {
+    if ($($ativa).is(':last-child') == false) {
+      $ativa.removeClass("active");
+      $('html, body').stop().animate({
+        scrollTop: $proximo.offset().top
+      });
+      $proximo.addClass("active");
+    } 
+  } else if (e.keyCode == 37 || e.keyCode == 38) {
+    if ($($ativa).is(':first-child') == false){
+      $ativa.removeClass("active");
+      $('html, body').stop().animate({
+        scrollTop:$anterior.offset().top
+      });
+      $anterior.addClass("active");
+    }
+  }
+
+
+
 })
 
 
+
 $(function(){
+
+
+
+
   $('section').css({'height':(($(window).height()))+'px'});
   // Now bind the event to the desired element
 
   $('section').bind("mousewheel DOMMouseScroll  MozMousePixelScroll", function(e) {
 
+    var $this = $(this);
   	var $proximo = $(this).next();
   	var $anterior = $(this).prev();
 
@@ -39,14 +65,20 @@ $(function(){
     var delta = parseInt(e.originalEvent.wheelDelta || -e.originalEvent.deltaY)
 
     if(delta < 0) {
-        
         if ($(this).is(':last-child') == false) {
-          
-          $('html, body').stop().animate({scrollTop: $proximo.offset().top});
-      } 
+          $this.removeClass("active");
+          $('html, body').stop().animate({
+            scrollTop: $proximo.offset().top
+          });
+          $proximo.addClass("active");
+        } 
     } else {
       	if ($(this).is(':first-child') == false){
-        	$('html, body').stop().animate({scrollTop:$anterior.offset().top});
+          $this.removeClass("active");
+        	$('html, body').stop().animate({
+            scrollTop:$anterior.offset().top
+          });
+          $anterior.addClass("active");
       	}
     }
 
@@ -86,6 +118,8 @@ for more details
   $(window).resize(function(){ // On resize
       $('section').css({'height':(($(window).height()))+'px'});
   });
+
+  $("a.active").click();
 });
 
 
