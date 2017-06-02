@@ -45,6 +45,50 @@ nav ul li {
   list-style: none;
 }
 
+nav ul li:before {
+  position: relative;
+  top: 0px;
+  display: inline-block;
+  width: 3px;
+  height: 21px;
+  content: " ";
+  -webkit-transform: scaleY(0);
+  transform: scaleY(0);
+  margin-right: 10px;
+  background-color: #FFF;
+  -webkit-transition: all 0.4s ease-in-out 0s;  
+  -moz-transition: all 0.4s ease-in-out 0s;
+  -ms-transition: all 0.4s ease-in-out 0s;
+  -o-transition: all 0.4s ease-in-out 0s;
+  transition: all 0.4s ease-in-out 0s;
+}
+
+nav ul li:after {
+  position: relative;
+  top: 0px;
+  margin-left: 6px;
+  right: 0;
+  display: inline-block;
+  width: 3px;
+  height: 21px;
+  content: " ";
+  transform: scaleY(0);
+    background-color: #FFF;
+  -webkit-transition: all 0.4s ease-in-out 0s;  
+  -moz-transition: all 0.4s ease-in-out 0s;
+  -ms-transition: all 0.4s ease-in-out 0s;
+  -o-transition: all 0.4s ease-in-out 0s;
+  transition: all 0.4s ease-in-out 0s;
+}
+
+
+
+nav ul li.active:before,  nav ul li.active:after{
+  -webkit-transform: scaleY(1);
+  transform: scaleY(1);
+}
+
+
 nav ul li a {
   text-decoration: none;
   color: #fff;

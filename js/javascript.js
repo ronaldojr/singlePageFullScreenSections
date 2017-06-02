@@ -13,27 +13,36 @@ $("nav").find('a').click(function(e){
 
 $(document).keydown(function(e){
 
-  console.log(e.keyCode)
 
   var $ativa = $('section.active');
   var $proximo = $($ativa).next();
   var $anterior = $($ativa).prev();
 
+  var $menu_ativo = $("nav ul li.active");
+  var $proximo_menu = $($menu_ativo).next();
+  var $anterior_menu = $($menu_ativo).prev();
+
+  
+
   if (e.which == 39 || e.which == 40) {
     if ($($ativa).is(':last-child') == false) {
       $ativa.removeClass("active");
+      $menu_ativo.removeClass("active");
       $('html, body').stop().animate({
         scrollTop: $proximo.offset().top
       });
       $proximo.addClass("active");
+      $proximo_menu.addClass("active");
     } 
   } else if (e.keyCode == 37 || e.keyCode == 38) {
     if ($($ativa).is(':first-child') == false){
       $ativa.removeClass("active");
+      $menu_ativo.removeClass("active");
       $('html, body').stop().animate({
         scrollTop:$anterior.offset().top
       });
       $anterior.addClass("active");
+      $anterior_menu.addClass("active");
     }
   }
 
